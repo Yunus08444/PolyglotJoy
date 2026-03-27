@@ -14,7 +14,7 @@ class ResultDialog {
                 Navigator.pop(context);
               },
               child: const Text("OK"),
-            )
+            ),
           ],
         );
       },

@@ -18,6 +18,7 @@ class AppRoutes {
     '/register': (context) => const RegisterPage(),
     '/home': (context) => const HomePage(),
     '/tests': (context) => const TestsListPage(),
+    '/lessons': (context) => const TestsListPage(), // алиас для страницы уроков
     '/question': (context) => const TestQuestionPage(),
     '/result': (context) => const ResultPage(),
     '/profile': (context) => const ProfilePage(),

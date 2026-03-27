@@ -4,11 +4,7 @@ class TestCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const TestCard({
-    super.key,
-    required this.title,
-    required this.onTap,
-  });
+  const TestCard({super.key, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
