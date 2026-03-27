@@ -6,6 +6,7 @@ import '../pages/auth/register_page.dart';
 import '../pages/home/home_page.dart';
 import '../pages/tests/tests_list_page.dart';
 import '../pages/lessons/lessons_list_page.dart';
+import '../pages/lessons/lesson_detail_page.dart';
 import '../pages/tests/test_question_page.dart';
 import '../pages/tests/test_result_page.dart';
 import '../pages/profile/profile_page.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
     '/home': (context) => const HomePage(),
     '/tests': (context) => const TestsListPage(),
     '/lessons': (context) => const LessonsListPage(),
+    '/lesson_detail': (context) => const LessonDetailPage(),
     '/question': (context) => const TestQuestionPage(),
     '/result': (context) => const ResultPage(),
     '/profile': (context) => const ProfilePage(),

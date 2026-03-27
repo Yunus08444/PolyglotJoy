@@ -38,7 +38,11 @@ class LessonsListPage extends StatelessWidget {
               title: Text(lesson['title']!),
               subtitle: Text(lesson['subtitle']!),
               onTap: () {
-                // TODO: перейти к содержимому урока
+                Navigator.pushNamed(
+                  context,
+                  '/lesson_detail',
+                  arguments: lesson,
+                );
               },
             ),
           );
