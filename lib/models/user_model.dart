@@ -15,20 +15,20 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json["id"] as int,
-      username: json["username"] as String,
-      email: json["email"] as String,
+      id: json["id"] as int? ?? 0,
+      username: json["username"] as String? ?? '',
+      email: json["email"] as String? ?? '',
       firstName: json["first_name"] as String?,
       lastName: json["last_name"] as String?,
     );
   }
 
   String get displayName {
-    if (firstName != null && lastName != null) {
+    if (firstName != null && firstName!.isNotEmpty && lastName != null && lastName!.isNotEmpty) {
       return '$firstName $lastName';
-    } else if (firstName != null) {
+    } else if (firstName != null && firstName!.isNotEmpty) {
       return firstName!;
-    } else if (lastName != null) {
+    } else if (lastName != null && lastName!.isNotEmpty) {
       return lastName!;
     } else {
       return username;

@@ -4,11 +4,15 @@ from .views import (
     CurrentUserView,
     LanguageTestListView,
     LanguageTestQuestionsView,
+    UserStatsView,
+    UserPreferencesView,
 )
 
 urlpatterns = [
     path('users/', UserRegisterView.as_view(), name='user-register'),
     path('users/me/', CurrentUserView.as_view(), name='user-me'),
+    path('users/me/stats/', UserStatsView.as_view(), name='user-stats'),
+    path('users/me/preferences/', UserPreferencesView.as_view(), name='user-preferences'),
     path('tests/', LanguageTestListView.as_view(), name='test-list'),
     path('tests/<int:test_id>/questions/', LanguageTestQuestionsView.as_view(), name='test-questions'),
 ]

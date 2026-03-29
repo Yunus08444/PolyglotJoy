@@ -21,14 +21,32 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final userJson = await _authService.getCurrentUser();
-    if (userJson != null) {
-      _user = User.fromJson(userJson);
-      _isAuthenticated = true;
-    }
+    try {
+      final token = await _authService.getToken();
+      if (token == null || token.isEmpty) {
+        _isAuthenticated = false;
+        _user = null;
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
 
-    _isLoading = false;
-    notifyListeners();
+      final userJson = await _authService.getCurrentUser();
+      if (userJson != null && userJson.isNotEmpty) {
+        _user = User.fromJson(userJson);
+        _isAuthenticated = true;
+      } else {
+        _isAuthenticated = false;
+        _user = null;
+      }
+    } catch (e) {
+      print('Error in tryAutoLogin: $e');
+      _isAuthenticated = false;
+      _user = null;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> login(String email, String password) async {
@@ -42,7 +60,7 @@ class AuthProvider extends ChangeNotifier {
       print('JWT токен получен');
 
       final profile = await _authService.getCurrentUser();
-      if (profile != null) {
+      if (profile != null && profile.isNotEmpty) {
         print('Профиль получен: $profile');
         _user = User.fromJson(profile);
         _isAuthenticated = true;
@@ -55,10 +73,10 @@ class AuthProvider extends ChangeNotifier {
       print('Ошибка логина: $e');
       _error = e.toString();
       _isAuthenticated = false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   Future<void> register(
