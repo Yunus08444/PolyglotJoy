@@ -28,11 +28,15 @@ class ApiClient {
       InterceptorsWrapper(
         onRequest: (options, handler) {
           debugPrint('📤 API Request: ${options.method} ${options.path}');
+          final authHeader = options.headers['Authorization']?.toString() ?? '';
+          final masked = authHeader.replaceAll(RegExp(r'Bearer\s+\S{6,}'), 'Bearer ****');
+          debugPrint('Auth header: present=${authHeader.isNotEmpty} value=$masked');
           if (_authToken != null) {
             options.headers['Authorization'] = 'Bearer $_authToken';
           }
           return handler.next(options);
         },
+
         onResponse: (response, handler) {
           debugPrint(
             '✅ API Response: ${response.statusCode} ${response.requestOptions.path}',
