@@ -170,9 +170,12 @@ class AuthService {
     if (token == null || token.isEmpty) throw Exception('Не авторизован');
 
     final Map<String, dynamic> data = {};
-    if (firstName != null && firstName.isNotEmpty)
+    if (firstName != null && firstName.isNotEmpty) {
       data['first_name'] = firstName;
-    if (lastName != null && lastName.isNotEmpty) data['last_name'] = lastName;
+    }
+    if (lastName != null && lastName.isNotEmpty) {
+      data['last_name'] = lastName;
+    }
 
     final response = await _client.dio.patch(
       '/users/me/',

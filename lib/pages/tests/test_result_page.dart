@@ -32,26 +32,26 @@ class ResultPage extends StatelessWidget {
 
           // Определение статуса и сообщения
           String title;
-      String emoji;
-      Color mainColor;
-      IconData statusIcon;
+          String emoji;
+          Color mainColor;
+          IconData statusIcon;
 
-      if (percentage >= 0.8) {
-        title = 'Отлично!';
-        emoji = '🌟';
-        mainColor = const Color(0xFF2EC4B6);
-        statusIcon = Icons.emoji_events_rounded;
-      } else if (percentage >= 0.6) {
-        title = 'Хорошо!';
-        emoji = '👍';
-        mainColor = const Color(0xFFFFB347);
-        statusIcon = Icons.thumb_up_rounded;
-      } else {
-        title = 'Попробуйте ещё раз';
-        emoji = '💪';
-        mainColor = const Color(0xFFE76F51);
-        statusIcon = Icons.fitness_center_rounded;
-      }
+          if (percentage >= 0.8) {
+            title = 'Отлично!';
+            emoji = '🌟';
+            mainColor = const Color(0xFF2EC4B6);
+            statusIcon = Icons.emoji_events_rounded;
+          } else if (percentage >= 0.6) {
+            title = 'Хорошо!';
+            emoji = '👍';
+            mainColor = const Color(0xFFFFB347);
+            statusIcon = Icons.thumb_up_rounded;
+          } else {
+            title = 'Попробуйте ещё раз';
+            emoji = '💪';
+            mainColor = const Color(0xFFE76F51);
+            statusIcon = Icons.fitness_center_rounded;
+          }
 
           return Center(
             child: SingleChildScrollView(
@@ -65,10 +65,7 @@ class ResultPage extends StatelessWidget {
                     tween: Tween<double>(begin: 0, end: 1),
                     curve: Curves.easeOutCubic,
                     builder: (context, value, child) {
-                      return Transform.scale(
-                        scale: value,
-                        child: child,
-                      );
+                      return Transform.scale(scale: value, child: child);
                     },
                     child: Container(
                       width: double.infinity,
@@ -76,10 +73,7 @@ class ResultPage extends StatelessWidget {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [
-                            mainColor.withOpacity(0.1),
-                            Colors.white,
-                          ],
+                          colors: [mainColor.withOpacity(0.1), Colors.white],
                         ),
                         borderRadius: BorderRadius.circular(32),
                         boxShadow: [
@@ -100,7 +94,10 @@ class ResultPage extends StatelessWidget {
                               height: 80,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: [mainColor, mainColor.withOpacity(0.7)],
+                                  colors: [
+                                    mainColor,
+                                    mainColor.withOpacity(0.7),
+                                  ],
                                 ),
                                 shape: BoxShape.circle,
                                 boxShadow: [
@@ -143,7 +140,7 @@ class ResultPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Круговой индикатор с процентом
                   TweenAnimationBuilder(
                     duration: const Duration(milliseconds: 1000),
@@ -195,7 +192,7 @@ class ResultPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Детальная статистика
                   Container(
                     width: double.infinity,
@@ -219,7 +216,7 @@ class ResultPage extends StatelessWidget {
                               width: 48,
                               height: 48,
                               decoration: BoxDecoration(
-                                color: const Color(0xFF2EC4B6).withOpacity(0.1),
+                                color: Color.fromRGBO(46, 196, 182, 0.1),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: const Icon(
@@ -261,7 +258,7 @@ class ResultPage extends StatelessWidget {
                               width: 48,
                               height: 48,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFE76F51).withOpacity(0.1),
+                                color: Color.fromRGBO(231, 111, 81, 0.1),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: const Icon(
@@ -300,7 +297,7 @@ class ResultPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Кнопка возврата
                   Container(
                     width: double.infinity,
@@ -348,18 +345,16 @@ class ResultPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Дополнительная кнопка для повторного прохождения
                   TextButton(
                     onPressed: () {
                       tests.resetTest();
                       Navigator.pop(context);
                     },
-                    style: TextButton.styleFrom(
-                      foregroundColor: mainColor,
-                    ),
+                    style: TextButton.styleFrom(foregroundColor: mainColor),
                     child: const Text(
                       'Пройти тест заново',
                       style: TextStyle(

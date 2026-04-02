@@ -24,7 +24,10 @@ class User {
   }
 
   String get displayName {
-    if (firstName != null && firstName!.isNotEmpty && lastName != null && lastName!.isNotEmpty) {
+    if (firstName != null &&
+        firstName!.isNotEmpty &&
+        lastName != null &&
+        lastName!.isNotEmpty) {
       return '$firstName $lastName';
     } else if (firstName != null && firstName!.isNotEmpty) {
       return firstName!;

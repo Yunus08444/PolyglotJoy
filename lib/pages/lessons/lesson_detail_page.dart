@@ -5,7 +5,8 @@ class LessonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lesson = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final lesson =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     final content = _getLessonContent(lesson['title']!);
     final gradientColors = _getGradientColors(lesson['title']!);
     final icon = _getLessonIcon(lesson['title']!);
@@ -35,7 +36,10 @@ class LessonDetailPage extends StatelessWidget {
                 ],
               ),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded, color: Color(0xFF2C3E50)),
+                icon: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: Color(0xFF2C3E50),
+                ),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -113,11 +117,7 @@ class LessonDetailPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: Icon(
-                            icon,
-                            size: 56,
-                            color: Colors.white,
-                          ),
+                          child: Icon(icon, size: 56, color: Colors.white),
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -139,7 +139,10 @@ class LessonDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(30),
@@ -188,9 +191,7 @@ class LessonDetailPage extends StatelessWidget {
                   Container(
                     height: 6,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: gradientColors,
-                      ),
+                      gradient: LinearGradient(colors: gradientColors),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(32),
                         topRight: Radius.circular(32),
@@ -250,7 +251,11 @@ class LessonDetailPage extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.check_circle_outline, size: 20, color: gradientColors.first),
+                              Icon(
+                                Icons.check_circle_outline,
+                                size: 20,
+                                color: gradientColors.first,
+                              ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(

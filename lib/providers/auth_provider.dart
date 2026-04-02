@@ -40,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
         _user = null;
       }
     } catch (e) {
-      print('Error in tryAutoLogin: $e');
+      debugPrint('Error in tryAutoLogin: $e');
       _isAuthenticated = false;
       _user = null;
     } finally {
@@ -55,22 +55,22 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      print('Начинаю логин с: $email');
+      debugPrint('Начинаю логин с: $email');
       await _authService.login(email, password);
-      print('JWT токен получен');
+      debugPrint('JWT токен получен');
 
       final profile = await _authService.getCurrentUser();
       if (profile != null && profile.isNotEmpty) {
-        print('Профиль получен: $profile');
+        debugPrint('Профиль получен: $profile');
         _user = User.fromJson(profile);
         _isAuthenticated = true;
       } else {
-        print('Профиль пуст');
+        debugPrint('Профиль пуст');
         _error = 'Не удалось получить профиль';
         _isAuthenticated = false;
       }
     } catch (e) {
-      print('Ошибка логина: $e');
+      debugPrint('Ошибка логина: $e');
       _error = e.toString();
       _isAuthenticated = false;
     } finally {
@@ -91,7 +91,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      print('Начинаю регистрацию: $username, $email');
+      debugPrint('Начинаю регистрацию: $username, $email');
       await _authService.register(
         username,
         email,
@@ -99,11 +99,11 @@ class AuthProvider extends ChangeNotifier {
         firstName: firstName,
         lastName: lastName,
       );
-      print('Регистрация успешна, начинаю логин');
+      debugPrint('Регистрация успешна, начинаю логин');
 
       await login(email, password);
     } catch (e) {
-      print('Ошибка регистрации: $e');
+      debugPrint('Ошибка регистрации: $e');
       _error = e.toString();
       _isAuthenticated = false;
       _isLoading = false;

@@ -46,9 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Восстановление пароля'),
         content: const Text(
           'Введите ваш email, и мы отправим инструкции по восстановлению пароля',
@@ -90,11 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.teal.shade50,
-              Colors.white,
-              Colors.cyan.shade50,
-            ],
+            colors: [Colors.teal.shade50, Colors.white, Colors.cyan.shade50],
           ),
         ),
         child: SafeArea(
@@ -305,9 +299,7 @@ class _LoginPageState extends State<LoginPage> {
                           return SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: authProvider.isLoading
-                                  ? null
-                                  : _login,
+                              onPressed: authProvider.isLoading ? null : _login,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2EC4B6),
                                 foregroundColor: Colors.white,

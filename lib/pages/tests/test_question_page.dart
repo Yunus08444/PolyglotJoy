@@ -208,7 +208,10 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                 children: [
                   // Современный индикатор прогресса
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 2,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
@@ -219,11 +222,16 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: FractionallySizedBox(
-                              widthFactor: (tests.currentQuestionIndex + 1) / tests.currentQuestions.length,
+                              widthFactor:
+                                  (tests.currentQuestionIndex + 1) /
+                                  tests.currentQuestions.length,
                               child: Container(
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
-                                    colors: [Color(0xFF2EC4B6), Color(0xFF20A090)],
+                                    colors: [
+                                      Color(0xFF2EC4B6),
+                                      Color(0xFF20A090),
+                                    ],
                                   ),
                                   borderRadius: BorderRadius.circular(3),
                                 ),
@@ -299,10 +307,11 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                                 elevation: 0,
                                 borderRadius: BorderRadius.circular(16),
                                 color: selectedAnswer == index
-                                    ? const Color(0xFF2EC4B6).withOpacity(0.08)
+                                    ? Color.fromRGBO(46, 196, 182, 0.08)
                                     : Colors.transparent,
                                 child: InkWell(
-                                  onTap: () => setState(() => selectedAnswer = index),
+                                  onTap: () =>
+                                      setState(() => selectedAnswer = index),
                                   borderRadius: BorderRadius.circular(16),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
@@ -314,11 +323,13 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                                         color: selectedAnswer == index
                                             ? const Color(0xFF2EC4B6)
                                             : const Color(0xFFE9ECEF),
-                                        width: selectedAnswer == index ? 2 : 1.5,
+                                        width: selectedAnswer == index
+                                            ? 2
+                                            : 1.5,
                                       ),
                                       borderRadius: BorderRadius.circular(16),
                                       color: selectedAnswer == index
-                                          ? const Color(0xFF2EC4B6).withOpacity(0.05)
+                                          ? Color.fromRGBO(46, 196, 182, 0.05)
                                           : Colors.white,
                                     ),
                                     child: Row(
@@ -352,7 +363,8 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                                             question.answers[index],
                                             style: TextStyle(
                                               fontSize: 16,
-                                              fontWeight: selectedAnswer == index
+                                              fontWeight:
+                                                  selectedAnswer == index
                                                   ? FontWeight.w600
                                                   : FontWeight.w500,
                                               color: selectedAnswer == index
@@ -381,7 +393,7 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                       boxShadow: [
                         if (selectedAnswer >= 0)
                           BoxShadow(
-                            color: const Color(0xFF2EC4B6).withOpacity(0.3),
+                            color: Color.fromRGBO(46, 196, 182, 0.3),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -404,7 +416,9 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            tests.isTestCompleted ? 'Завершить тест' : 'Следующий вопрос',
+                            tests.isTestCompleted
+                                ? 'Завершить тест'
+                                : 'Следующий вопрос',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -413,10 +427,7 @@ class _TestQuestionPageState extends State<TestQuestionPage> {
                           if (!tests.isTestCompleted && selectedAnswer >= 0)
                             const SizedBox(width: 8),
                           if (!tests.isTestCompleted && selectedAnswer >= 0)
-                            const Icon(
-                              Icons.arrow_forward_rounded,
-                              size: 18,
-                            ),
+                            const Icon(Icons.arrow_forward_rounded, size: 18),
                         ],
                       ),
                     ),

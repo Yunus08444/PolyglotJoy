@@ -48,8 +48,11 @@ class TestService {
 
         // Debug log to help diagnose empty responses
         debugPrint(
-          '📦 fetchTests: parsed ${dataList.length} items from ${response.data.runtimeType}',
+          '📦 fetchTests: status=${response.statusCode} path=${response.requestOptions.path} parsed=${dataList.length} type=${response.data.runtimeType}',
         );
+        try {
+          debugPrint('📦 fetchTests: raw=${response.data}');
+        } catch (_) {}
 
         return dataList.map((item) {
           final map = item as Map<String, dynamic>;
@@ -108,8 +111,11 @@ class TestService {
         }
 
         debugPrint(
-          '📦 fetchQuestions: parsed ${dataList.length} items from ${response.data.runtimeType}',
+          '📦 fetchQuestions: status=${response.statusCode} path=${response.requestOptions.path} parsed=${dataList.length} type=${response.data.runtimeType}',
         );
+        try {
+          debugPrint('📦 fetchQuestions: raw=${response.data}');
+        } catch (_) {}
 
         return dataList.map((item) {
           final map = item as Map<String, dynamic>;
