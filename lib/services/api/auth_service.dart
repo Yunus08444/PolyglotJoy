@@ -13,7 +13,10 @@ class AuthService {
   static const _accessTokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
 
-  Future<Map<String, dynamic>> login(String usernameOrEmail, String password) async {
+  Future<Map<String, dynamic>> login(
+    String usernameOrEmail,
+    String password,
+  ) async {
     try {
       final response = await _client.dio.post(
         '/token/',
@@ -24,10 +27,13 @@ class AuthService {
         final data = response.data as Map<String, dynamic>;
         final accessToken = data['access'];
         final refreshToken = data['refresh'];
-        
+
         if (accessToken != null && refreshToken != null) {
           await _secureStorage.write(key: _accessTokenKey, value: accessToken);
-          await _secureStorage.write(key: _refreshTokenKey, value: refreshToken);
+          await _secureStorage.write(
+            key: _refreshTokenKey,
+            value: refreshToken,
+          );
           _client.setAuthToken(accessToken);
         }
         return data;
@@ -58,7 +64,8 @@ class AuthService {
           'username': username,
           'email': email,
           'password': password,
-          if (firstName != null && firstName.isNotEmpty) 'first_name': firstName,
+          if (firstName != null && firstName.isNotEmpty)
+            'first_name': firstName,
           if (lastName != null && lastName.isNotEmpty) 'last_name': lastName,
         },
       );
@@ -89,6 +96,44 @@ class AuthService {
     _client.clearAuthToken();
   }
 
+  /// Попытаться обновить access token используя refresh token.
+  /// Возвращает true, если обновление прошло успешно и токен сохранён.
+  Future<bool> refreshToken() async {
+    final refresh = await _secureStorage.read(key: _refreshTokenKey);
+    if (refresh == null || refresh.isEmpty) {
+      await logout();
+      return false;
+    }
+
+    try {
+      final response = await _client.dio.post(
+        '/token/refresh/',
+        data: {'refresh': refresh},
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data as Map<String, dynamic>;
+        // допустимые ключи зависят от реализации сервера
+        final accessToken =
+            data['access'] ?? data['access_token'] ?? data['token'];
+        if (accessToken != null && accessToken is String) {
+          await _secureStorage.write(key: _accessTokenKey, value: accessToken);
+          _client.setAuthToken(accessToken);
+          return true;
+        }
+      }
+
+      await logout();
+      return false;
+    } on DioException catch (_) {
+      await logout();
+      return false;
+    } catch (_) {
+      await logout();
+      return false;
+    }
+  }
+
   Future<String?> getToken() async {
     return await _secureStorage.read(key: _accessTokenKey);
   }
@@ -100,11 +145,9 @@ class AuthService {
     try {
       final response = await _client.dio.get(
         '/users/me/',
-        options: Options(
-          headers: {'Authorization': 'Bearer $token'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
-      
+
       if (response.statusCode == 200) {
         return response.data as Map<String, dynamic>;
       }
@@ -119,12 +162,16 @@ class AuthService {
     }
   }
 
-  Future<Map<String, dynamic>> updateProfile({String? firstName, String? lastName}) async {
+  Future<Map<String, dynamic>> updateProfile({
+    String? firstName,
+    String? lastName,
+  }) async {
     final token = await getToken();
     if (token == null || token.isEmpty) throw Exception('Не авторизован');
 
     final Map<String, dynamic> data = {};
-    if (firstName != null && firstName.isNotEmpty) data['first_name'] = firstName;
+    if (firstName != null && firstName.isNotEmpty)
+      data['first_name'] = firstName;
     if (lastName != null && lastName.isNotEmpty) data['last_name'] = lastName;
 
     final response = await _client.dio.patch(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import '../models/test_model.dart';
 import '../models/question_model.dart';
 import '../services/api/test_service.dart';
@@ -35,7 +36,15 @@ class TestProvider extends ChangeNotifier {
     try {
       _tests = await _testService.fetchTests();
     } catch (e) {
-      _error = e.toString();
+      if (e is DioException && e.response?.statusCode == 401) {
+        // Clear stored tokens and set friendly error message
+        try {
+          await _testService.logout();
+        } catch (_) {}
+        _error = 'Не авторизован. Пожалуйста, войдите.';
+      } else {
+        _error = e.toString();
+      }
     }
     _isLoading = false;
     notifyListeners();
