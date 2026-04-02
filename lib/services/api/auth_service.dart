@@ -8,7 +8,11 @@ class AuthService {
 
   AuthService({ApiClient? client, FlutterSecureStorage? secureStorage})
     : _client = client ?? ApiClient(),
-      _secureStorage = secureStorage ?? const FlutterSecureStorage();
+      _secureStorage = secureStorage ?? const FlutterSecureStorage() {
+    // Provide ApiClient with a callback to refresh tokens when a 401 occurs.
+    // This avoids circular imports and centralizes retry logic in the client.
+    _client.setRefreshTokenCallback(() => refreshToken());
+  }
 
   static const _accessTokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
