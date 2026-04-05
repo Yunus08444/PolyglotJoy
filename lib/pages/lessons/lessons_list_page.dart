@@ -16,6 +16,23 @@ class LessonsListPage extends StatelessWidget {
         'title': 'Урок 4: Разговорная практика',
         'subtitle': 'Диалоги и выражения',
       },
+      {
+        'title': 'Урок 5: Аудирование',
+        'subtitle': 'Аудирование',
+      },
+      {
+        'title': 'Урок 6: Письмо',
+        'subtitle': 'Письмо',
+      },
+      {
+        'title': 'Урок 7: Чтение ',
+        'subtitle': 'Чтение',
+      },
+      {
+        'title': 'Урок 8: культура и традиции',
+        'subtitle': 'Культура и традиции',
+      },
+      
     ];
 
     return Scaffold(
