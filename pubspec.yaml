@@ -13,16 +13,19 @@ dependencies:
 
   # Network
   dio: ^5.2.5
-  
+
   # Storage
   flutter_secure_storage: ^8.0.0
-  shared_preferences: ^2.2.2  # ← Добавлено
-  
+  shared_preferences: ^2.2.2
+
   # State Management
   provider: ^6.0.5
-  
+
   # UI
   cupertino_icons: ^1.0.8
+
+  # Image handling
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

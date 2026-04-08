@@ -60,11 +60,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: [
                 _buildHeader(context, userName, auth),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _buildProgressSection(),
-                ),
-                const SizedBox(height: 20),
+
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -101,32 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 onTap: () =>
                                     Navigator.pushNamed(context, '/lessons'),
                               ),
-                              _LanguageCard(
-                                icon: Icons.school,
-                                title: 'Advanced',
-                                subtitle: 'Pro Level',
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFFF093FB),
-                                    Color(0xFFF5576C),
-                                  ],
-                                ),
-                                onTap: () =>
-                                    Navigator.pushNamed(context, '/lessons'),
-                              ),
-                              _FeatureCard(
-                                icon: Icons.quiz,
-                                title: 'Тесты',
-                                subtitle: 'Проверь знания',
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF4ECDC4),
-                                    Color(0xFF44A08D),
-                                  ],
-                                ),
-                                onTap: () =>
-                                    Navigator.pushNamed(context, '/tests'),
-                              ),
+
                               _FeatureCard(
                                 icon: Icons.settings,
                                 title: 'Настройки',
@@ -200,78 +171,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildProgressSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF6C63FF), Color(0xFF4A44CC)],
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF6C63FF).withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Icon(
-                  Icons.emoji_events,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Уровень 7',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      '68% до следующего уровня',
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: 0.68,
-              backgroundColor: Colors.white.withValues(alpha: 0.2),
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-              minHeight: 8,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -309,11 +208,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             label: 'Уроки',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.quiz_outlined),
-            activeIcon: Icon(Icons.quiz),
-            label: 'Тесты',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),
             label: 'Профиль',
@@ -322,15 +216,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Уже на главной
               break;
             case 1:
               Navigator.pushNamed(context, '/lessons');
               break;
             case 2:
-              Navigator.pushNamed(context, '/tests');
-              break;
-            case 3:
               Navigator.pushNamed(context, '/profile');
               break;
           }

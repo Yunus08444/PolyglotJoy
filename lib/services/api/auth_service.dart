@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'api_client.dart';
 
@@ -154,10 +156,7 @@ class AuthService {
     if (token == null || token.isEmpty) return null;
 
     try {
-      final response = await _client.dio.get(
-        '/users/me/',
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
-      );
+      final response = await _client.dio.get('/users/me/');
 
       if (response.statusCode == 200) {
         return response.data as Map<String, dynamic>;
@@ -191,7 +190,6 @@ class AuthService {
     final response = await _client.dio.patch(
       '/users/me/',
       data: data,
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
     if (response.statusCode == 200) {
@@ -201,19 +199,55 @@ class AuthService {
     }
   }
 
+  Future<Map<String, dynamic>> uploadProfilePhoto(File imageFile) async {
+    final token = await getToken();
+    if (token == null || token.isEmpty) throw Exception('Не авторизован');
+
+    try {
+      final formData = FormData.fromMap({
+        'photo': await MultipartFile.fromFile(
+          imageFile.path,
+          filename: 'profile_photo.jpg',
+        ),
+      });
+
+      debugPrint('📤 Uploading photo with token: ${token.substring(0, 20)}...');
+
+      final response = await _client.dio.patch(
+        '/users/me/',
+        data: formData,
+      );
+
+      debugPrint('📸 Upload response status: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final data = response.data as Map<String, dynamic>;
+        debugPrint('📸 Photo upload response: $data');
+        return data;
+      } else {
+        throw Exception('Ошибка загрузки фото');
+      }
+    } catch (e) {
+      debugPrint('❌ Photo upload error: $e');
+      throw Exception('Ошибка загрузки фото: $e');
+    }
+  }
+
   Future<Map<String, dynamic>> getUserStats() async {
     final token = await getToken();
     if (token == null || token.isEmpty) throw Exception('Не авторизован');
 
-    final response = await _client.dio.get(
-      '/users/me/stats/',
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
-    );
+    try {
+      final response = await _client.dio.get('/users/me/stats/');
 
-    if (response.statusCode == 200) {
-      return response.data as Map<String, dynamic>;
-    } else {
-      throw Exception('Ошибка получения статистики');
+      if (response.statusCode == 200) {
+        debugPrint('✅ Stats response: ${response.data}');
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Ошибка получения статистики: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('❌ Error getting stats: $e');
+      throw Exception('Ошибка получения статистики: $e');
     }
   }
 
@@ -233,13 +267,48 @@ class AuthService {
     final response = await _client.dio.patch(
       '/users/me/preferences/',
       data: data,
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
     if (response.statusCode == 200) {
       return response.data as Map<String, dynamic>;
     } else {
       throw Exception('Ошибка обновления предпочтений');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getLessons() async {
+    try {
+      final response = await _client.dio.get('/lessons/');
+      if (response.statusCode == 200) {
+        return List<Map<String, dynamic>>.from(response.data as List);
+      } else {
+        throw Exception('Ошибка получения уроков');
+      }
+    } catch (e) {
+      debugPrint('❌ Error loading lessons: $e');
+      throw Exception('Ошибка получения уроков: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> completeLesson(int lessonId) async {
+    final token = await getToken();
+    if (token == null || token.isEmpty) throw Exception('Не авторизован');
+
+    try {
+      final response = await _client.dio.post(
+        '/lessons/$lessonId/complete/',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('✅ Lesson $lessonId completed');
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Ошибка завершения урока');
+      }
+    } catch (e) {
+      debugPrint('❌ Error completing lesson: $e');
+      throw Exception('Ошибка завершения урока: $e');
     }
   }
 
@@ -258,7 +327,6 @@ class AuthService {
         'completed_lesson': completedLesson,
         'completed_test': completedTest,
       },
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
     if (response.statusCode == 200) {

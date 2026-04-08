@@ -20,7 +20,6 @@ class ApiClient {
         baseUrl: 'http://127.0.0.1:8000/api',
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
-        headers: {'Content-Type': 'application/json'},
       ),
     );
 
@@ -29,10 +28,16 @@ class ApiClient {
         onRequest: (options, handler) {
           debugPrint('📤 API Request: ${options.method} ${options.path}');
           final authHeader = options.headers['Authorization']?.toString() ?? '';
-          final masked = authHeader.replaceAll(RegExp(r'Bearer\s+\S{6,}'), 'Bearer ****');
-          debugPrint('Auth header: present=${authHeader.isNotEmpty} value=$masked');
-          if (_authToken != null) {
+          final masked = authHeader.replaceAll(
+            RegExp(r'Bearer\s+\S{6,}'),
+            'Bearer ****',
+          );
+          debugPrint(
+            'Auth header: present=${authHeader.isNotEmpty} value=$masked',
+          );
+          if (_authToken != null && _authToken!.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $_authToken';
+            debugPrint('✅ Added Bearer token from ApiClient');
           }
           return handler.next(options);
         },
@@ -46,13 +51,13 @@ class ApiClient {
         onError: (error, handler) async {
           final req = error.requestOptions;
           final status = error.response?.statusCode;
-          debugPrint(
-            '❌ API Error: ${status} ${req.path}',
-          );
+          debugPrint('❌ API Error: ${status} ${req.path}');
           debugPrint('   Error: ${error.message}');
 
           // Do not attempt to refresh token for refresh endpoint itself
-          if (status == 401 && !_isRefreshPath(req.path) && _onRefresh != null) {
+          if (status == 401 &&
+              !_isRefreshPath(req.path) &&
+              _onRefresh != null) {
             if (!_isRefreshing) {
               _isRefreshing = true;
               try {
@@ -68,7 +73,8 @@ class ApiClient {
                     // retry queued requests
                     for (var entry in _queue) {
                       try {
-                        entry.key.headers['Authorization'] = 'Bearer $_authToken';
+                        entry.key.headers['Authorization'] =
+                            'Bearer $_authToken';
                         final r = await _dio.fetch(entry.key);
                         entry.value.complete(r);
                       } catch (e) {
@@ -119,7 +125,6 @@ class ApiClient {
 
           return handler.next(error);
         },
-
       ),
     );
   }
@@ -143,4 +148,3 @@ class ApiClient {
     return path.contains('/token/refresh');
   }
 }
-

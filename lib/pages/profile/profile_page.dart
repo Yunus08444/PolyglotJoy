@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../models/user_model.dart';
@@ -11,10 +13,11 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
   final _editFirstNameController = TextEditingController();
   final _editLastNameController = TextEditingController();
   bool _isUpdating = false;
+  final _imagePicker = ImagePicker();
 
   int _completedTests = 0;
   int _completedLessons = 0;
@@ -48,21 +51,40 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadUserStats();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _editFirstNameController.dispose();
     _editLastNameController.dispose();
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      debugPrint('🔄 App resumed, reloading stats...');
+      _loadUserStats();
+    }
+  }
+
   Future<void> _loadUserStats() async {
+    debugPrint('⏳ Starting _loadUserStats...');
     setState(() => _isLoadingStats = true);
 
     try {
       final stats = await _authService.getUserStats();
+      debugPrint('📊 Stats loaded: $stats');
+      debugPrint('   completed_tests: ${stats['completed_tests']}');
+      debugPrint('   completed_lessons: ${stats['completed_lessons']}');
+      debugPrint('   total_points: ${stats['total_points']}');
+      debugPrint('   streak_days: ${stats['streak_days']}');
+      debugPrint('   current_language: ${stats['current_language']}');
+      debugPrint('   level: ${stats['level']}');
+
       setState(() {
         _completedTests = stats['completed_tests'] ?? 0;
         _completedLessons = stats['completed_lessons'] ?? 0;
@@ -71,10 +93,13 @@ class _ProfilePageState extends State<ProfilePage> {
         _currentLanguage = stats['current_language'] ?? 'Английский';
         _level = stats['level'] ?? 'Средний (B1)';
       });
+
+      debugPrint('✅ Stats updated in state');
     } catch (e) {
-      debugPrint('Error loading stats: $e');
+      debugPrint('❌ Error loading stats: $e');
     } finally {
       setState(() => _isLoadingStats = false);
+      debugPrint('✅ _isLoadingStats = false');
     }
   }
 
@@ -159,6 +184,60 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     } finally {
       setState(() => _isUpdating = false);
+    }
+  }
+
+  Future<void> _pickAndUploadProfilePhoto() async {
+    try {
+      final pickedFile = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+
+      if (pickedFile == null) return;
+
+      setState(() => _isUpdating = true);
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      try {
+        final imageFile = File(pickedFile.path);
+        debugPrint('🖼️ Uploading photo from: ${imageFile.path}');
+        await _authService.uploadProfilePhoto(imageFile);
+
+        debugPrint('⏳ Refreshing user data...');
+        await authProvider.tryAutoLogin();
+
+        debugPrint('✅ User after refresh: ${authProvider.user?.photoUrl}');
+
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Фото загружено успешно!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          setState(() {});
+        }
+      } catch (e) {
+        debugPrint('❌ Upload error: $e');
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Ошибка загрузки фото: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } finally {
+        setState(() => _isUpdating = false);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ошибка выбора фото: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -445,7 +524,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
+    debugPrint('🎨 ProfilePage.build() called, _isLoadingStats=$_isLoadingStats, _completedLessons=$_completedLessons');
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
       body: Consumer<AuthProvider>(
@@ -453,13 +534,16 @@ class _ProfilePageState extends State<ProfilePage> {
           final user = authProvider.user;
 
           if (authProvider.isLoading || _isLoadingStats) {
+            debugPrint('   -> Showing Loader (isLoading=${authProvider.isLoading}, _isLoadingStats=$_isLoadingStats)');
             return const Center(child: CircularProgressIndicator());
           }
 
           if (user == null) {
+            debugPrint('   -> User is null');
             return const Center(child: Text('Пользователь не найден'));
           }
 
+          debugPrint('   -> Showing profile with stats: lessons=$_completedLessons, tests=$_completedTests');
           return RefreshIndicator(
             onRefresh: _loadUserStats,
             child: CustomScrollView(
@@ -500,32 +584,57 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     ],
                                   ),
-                                  child: const CircleAvatar(
-                                    radius: 50,
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                      Icons.person,
-                                      size: 50,
-                                      color: Color(0xFF6366F1),
-                                    ),
-                                  ),
+                                  child:
+                                      user.photoUrl != null &&
+                                          user.photoUrl!.isNotEmpty
+                                      ? CircleAvatar(
+                                          radius: 50,
+                                          backgroundImage: NetworkImage(
+                                            user.photoUrl!,
+                                          ),
+                                          onBackgroundImageError:
+                                              (exception, stackTrace) {},
+                                        )
+                                      : const CircleAvatar(
+                                          radius: 50,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.person,
+                                            size: 50,
+                                            color: Color(0xFF6366F1),
+                                          ),
+                                        ),
                                 ),
                                 Positioned(
                                   bottom: 0,
                                   right: 0,
                                   child: GestureDetector(
-                                    onTap: () => _showEditNameDialog(user),
+                                    onTap: _isUpdating
+                                        ? null
+                                        : _pickAndUploadProfilePhoto,
                                     child: Container(
                                       padding: const EdgeInsets.all(4),
                                       decoration: const BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle,
                                       ),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        size: 18,
-                                        color: Color(0xFF6366F1),
-                                      ),
+                                      child: _isUpdating
+                                          ? const SizedBox(
+                                              width: 18,
+                                              height: 18,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                      Color
+                                                    >(Color(0xFF6366F1)),
+                                              ),
+                                            )
+                                          : const Icon(
+                                              Icons.camera_alt,
+                                              size: 18,
+                                              color: Color(0xFF6366F1),
+                                            ),
                                     ),
                                   ),
                                 ),
