@@ -25,11 +25,11 @@ class LessonsListPage extends StatelessWidget {
         'subtitle': 'Письмо',
       },
       {
-        'title': 'Урок 7: Чтение ',
+        'title': 'Урок 7: Чтение',
         'subtitle': 'Чтение',
       },
       {
-        'title': 'Урок 8: культура и традиции',
+        'title': 'Урок 8: Культура и традиции',
         'subtitle': 'Культура и традиции',
       },
       
