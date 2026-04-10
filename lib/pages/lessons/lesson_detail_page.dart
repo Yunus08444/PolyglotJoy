@@ -15,6 +15,18 @@ class _LessonListPageState extends State<LessonListPage> {
   List<Map<String, dynamic>> lessons = [];
   bool isLoading = true;
 
+  // Маппинг для приведения названий к правильному формату
+  final Map<String, String> titleMapping = {
+    'Основы': 'Урок 1: Основы',
+    'Грамматика': 'Урок 2: Грамматика',
+    'Словарь': 'Урок 3: Словарь',
+    'Разговорная': 'Урок 4: Разговорная практика',
+    'Аудирование': 'Урок 5: Аудирование',
+    'Письмо': 'Урок 6: Письмо',
+    'Чтение': 'Урок 7: Чтение',
+    'Культура': 'Урок 8: Культура и традиции',
+  };
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +37,20 @@ class _LessonListPageState extends State<LessonListPage> {
   Future<void> _loadLessons() async {
     try {
       final data = await _authService.getLessons();
+      // Приводим названия уроков к правильному формату
+      for (var lesson in data) {
+        final originalTitle = lesson['title'] ?? '';
+        String? newTitle;
+        for (var key in titleMapping.keys) {
+          if (originalTitle.contains(key)) {
+            newTitle = titleMapping[key];
+            break;
+          }
+        }
+        if (newTitle != null) {
+          lesson['title'] = newTitle;
+        }
+      }
       setState(() {
         lessons = data;
         isLoading = false;
