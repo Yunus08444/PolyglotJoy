@@ -4,8 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenRefreshView
 from users.token_views import EmailTokenObtainPairView
+from django.views.generic import RedirectView  
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/api/')), 
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),
     path('api/token/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
