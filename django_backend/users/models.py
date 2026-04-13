@@ -36,6 +36,19 @@ class UserLessonCompletion(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.lesson.title}"
 
+
+class UserLessonExerciseHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lesson_exercise_history')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='exercise_history')
+    seen_indexes = models.JSONField(default=list, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'lesson')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.lesson.title} history"
+
 class LanguageTest(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(blank=True, default='')

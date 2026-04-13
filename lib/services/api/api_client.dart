@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -15,9 +16,10 @@ class ApiClient {
   final List<MapEntry<RequestOptions, Completer<Response>>> _queue = [];
 
   ApiClient() {
+    const apiBaseUrl = String.fromEnvironment('API_BASE_URL');
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'http://127.0.0.1:8000/api',
+        baseUrl: apiBaseUrl.isNotEmpty ? apiBaseUrl : _defaultBaseUrl,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
       ),
@@ -146,5 +148,17 @@ class ApiClient {
 
   bool _isRefreshPath(String path) {
     return path.contains('/token/refresh');
+  }
+
+  static String get _defaultBaseUrl {
+    if (kIsWeb) {
+      return 'http://127.0.0.1:8000/api';
+    }
+
+    if (Platform.isAndroid) {
+      return 'http://10.0.2.2:8000/api';
+    }
+
+    return 'http://127.0.0.1:8000/api';
   }
 }

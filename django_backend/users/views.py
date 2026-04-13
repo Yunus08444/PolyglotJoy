@@ -1,9 +1,59 @@
+import random
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import LanguageTest, Question, UserStats, UserProfile, Lesson, UserLessonCompletion
+from .models import (
+    LanguageTest,
+    Lesson,
+    Question,
+    UserLessonCompletion,
+    UserLessonExerciseHistory,
+    UserProfile,
+    UserStats,
+)
 from .serializers import UserSerializer, UserRegisterSerializer, UserStatsSerializer, LessonSerializer
 from .test_serializers import LanguageTestSerializer, QuestionSerializer
+from .lesson_content import LESSON_EXERCISES
+
+
+def get_rotating_lesson_exercises(*, user, lesson, limit):
+    exercises = LESSON_EXERCISES.get(lesson.title, [])
+    if not exercises:
+        return []
+
+    total_count = len(exercises)
+    limit = max(1, min(limit, total_count))
+
+    history, _ = UserLessonExerciseHistory.objects.get_or_create(
+        user=user,
+        lesson=lesson,
+        defaults={'seen_indexes': []},
+    )
+
+    seen_indexes = [
+        index for index in history.seen_indexes
+        if isinstance(index, int) and 0 <= index < total_count
+    ]
+    all_indexes = list(range(total_count))
+    unseen_indexes = [index for index in all_indexes if index not in seen_indexes]
+
+    if len(unseen_indexes) >= limit:
+        selected_indexes = random.sample(unseen_indexes, limit)
+        next_seen_indexes = seen_indexes + selected_indexes
+    else:
+        selected_indexes = list(unseen_indexes)
+        remaining_needed = limit - len(selected_indexes)
+        reset_pool = [index for index in all_indexes if index not in selected_indexes]
+        random.shuffle(reset_pool)
+        carry_over_indexes = reset_pool[:remaining_needed]
+        selected_indexes.extend(carry_over_indexes)
+        next_seen_indexes = carry_over_indexes
+
+    random.shuffle(selected_indexes)
+    history.seen_indexes = next_seen_indexes
+    history.save(update_fields=['seen_indexes', 'updated_at'])
+
+    return [exercises[index] for index in selected_indexes]
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -58,18 +108,99 @@ class LessonCompleteView(APIView):
 
         return Response({'completed': True, 'lesson': LessonSerializer(lesson, context={'request': request}).data})
 
-class LanguageTestListView(generics.ListAPIView):
-    queryset = LanguageTest.objects.all()
-    serializer_class = LanguageTestSerializer
+class LessonExercisesView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-class LanguageTestQuestionsView(generics.ListAPIView):
-    serializer_class = QuestionSerializer
+    def get(self, request, lesson_id):
+        try:
+            lesson = Lesson.objects.get(id=lesson_id)
+        except Lesson.DoesNotExist:
+            return Response({'error': 'Урок не найден'}, status=status.HTTP_404_NOT_FOUND)
+
+        exercises = LESSON_EXERCISES.get(lesson.title, [])
+        if not exercises:
+            return Response({'error': 'Для этого урока пока нет упражнений'}, status=status.HTTP_404_NOT_FOUND)
+
+        limit = request.query_params.get('limit')
+        try:
+            limit = int(limit) if limit is not None else 12
+        except ValueError:
+            limit = 12
+
+        selected = get_rotating_lesson_exercises(
+            user=request.user,
+            lesson=lesson,
+            limit=limit,
+        )
+
+        return Response(selected)
+
+
+class LanguageTestListView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        test_id = self.kwargs.get('test_id')
-        return Question.objects.filter(test_id=test_id)
+    def get(self, request):
+        queryset = LanguageTest.objects.filter(questions__isnull=False).distinct()
+        if queryset.exists():
+            serializer = LanguageTestSerializer(queryset, many=True)
+            return Response(serializer.data)
+
+        fallback_tests = []
+        for lesson in Lesson.objects.all():
+            exercises = LESSON_EXERCISES.get(lesson.title, [])
+            if exercises:
+                fallback_tests.append({
+                    'id': lesson.id,
+                    'title': lesson.title,
+                    'description': lesson.subtitle or lesson.description,
+                    'questions_count': len(exercises),
+                })
+
+        return Response(fallback_tests)
+
+
+class LanguageTestQuestionsView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, test_id):
+        queryset = Question.objects.filter(test_id=test_id)
+        if queryset.exists():
+            questions = list(queryset)
+            random.shuffle(questions)
+            serializer = QuestionSerializer(questions, many=True)
+            return Response(serializer.data)
+
+        lesson = Lesson.objects.filter(id=test_id).first()
+        if lesson is None:
+            return Response({'error': 'Тест не найден'}, status=status.HTTP_404_NOT_FOUND)
+
+        exercises = LESSON_EXERCISES.get(lesson.title, [])
+        if not exercises:
+            return Response({'error': 'Для этого теста пока нет вопросов'}, status=status.HTTP_404_NOT_FOUND)
+
+        selected_exercises = get_rotating_lesson_exercises(
+            user=request.user,
+            lesson=lesson,
+            limit=len(exercises),
+        )
+
+        questions = []
+        for index, exercise in enumerate(selected_exercises, start=1):
+            answers = list(exercise.get('options', []))
+            answer = exercise.get('answer')
+            try:
+                correct_index = answers.index(answer)
+            except ValueError:
+                correct_index = 0
+
+            questions.append({
+                'id': index,
+                'text': exercise.get('question', ''),
+                'answers': answers,
+                'correct_index': correct_index,
+            })
+
+        return Response(questions)
 
 class UserStatsView(APIView):
     permission_classes = [permissions.IsAuthenticated]

@@ -290,6 +290,27 @@ class AuthService {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getLessonExercises(
+    int lessonId, {
+    int limit = 12,
+  }) async {
+    try {
+      final response = await _client.dio.get(
+        '/lessons/$lessonId/exercises/',
+        queryParameters: {'limit': limit},
+      );
+
+      if (response.statusCode == 200) {
+        return List<Map<String, dynamic>>.from(response.data as List);
+      } else {
+        throw Exception('Ошибка получения упражнений');
+      }
+    } catch (e) {
+      debugPrint('❌ Error loading lesson exercises: $e');
+      throw Exception('Ошибка получения упражнений: $e');
+    }
+  }
+
   Future<Map<String, dynamic>> completeLesson(int lessonId) async {
     final token = await getToken();
     if (token == null || token.isEmpty) throw Exception('Не авторизован');

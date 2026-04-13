@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import LanguageTest, Question, UserStats, UserProfile
+from .models import LanguageTest, Question, UserLessonExerciseHistory, UserStats, UserProfile
 
 User = get_user_model()
 
@@ -35,3 +35,10 @@ class QuestionAdmin(admin.ModelAdmin):
 class UserStatsAdmin(admin.ModelAdmin):
     list_display = ('user', 'completed_tests', 'completed_lessons', 'total_points', 'streak_days')
     search_fields = ('user__username',)
+
+
+@admin.register(UserLessonExerciseHistory)
+class UserLessonExerciseHistoryAdmin(admin.ModelAdmin):
+    list_display = ('user', 'lesson', 'updated_at')
+    search_fields = ('user__username', 'lesson__title')
+    readonly_fields = ('updated_at',)

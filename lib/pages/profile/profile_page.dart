@@ -388,10 +388,10 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
             const SizedBox(height: 12),
             _buildAchievementItem(
               Icons.school,
-              '10 уроков',
+              '8 уроков',
               _completedLessons >= 10,
               Colors.blue,
-              value: '$_completedLessons/10',
+              value: '$_completedLessons/8',
             ),
             const SizedBox(height: 12),
             _buildAchievementItem(
