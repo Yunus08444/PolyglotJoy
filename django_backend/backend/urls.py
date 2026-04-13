@@ -7,7 +7,7 @@ from users.token_views import EmailTokenObtainPairView
 from django.views.generic import RedirectView  
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/api/')), 
+    path('', RedirectView.as_view(url='/admin/')), 
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),
     path('api/token/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
