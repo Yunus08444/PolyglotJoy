@@ -704,12 +704,6 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                         Row(
                           children: [
                             _buildStatCard(
-                              Icons.quiz,
-                              'Тесты',
-                              _completedTests,
-                              'завершено',
-                            ),
-                            _buildStatCard(
                               Icons.menu_book,
                               'Уроки',
                               _completedLessons,
