@@ -141,6 +141,66 @@ LESSON_EXERCISES = {
             'options': ['Мне нравится', 'Меня зовут', 'Я люблю', 'Я хочу'],
             'answer': 'Меня зовут',
           },
+                    {
+            'question': 'Какой артикль используется перед словами, начинающимися с согласного звука?',
+            'options': ['a', 'an', 'the', '-- (нет артикля)'],
+            'answer': 'a',
+          },
+          {
+            'question': 'Как сказать "Добрый вечер"?',
+            'options': ['Good night', 'Good morning', 'Good evening', 'Good afternoon'],
+            'answer': 'Good evening',
+          },
+          {
+            'question': 'Какая буква идёт после "M" в алфавите?',
+            'options': ['L', 'N', 'O', 'K'],
+            'answer': 'N',
+          },
+          {
+            'question': 'Как попрощаться неформально?',
+            'options': ['Goodbye', 'Farewell', 'Bye bye', 'Good night'],
+            'answer': 'Bye bye',
+          },
+          {
+            'question': 'Как сказать "Да"?',
+            'options': ['No', 'Yes', 'OK', 'Please'],
+            'answer': 'Yes',
+          },
+          {
+            'question': 'Как сказать "Нет"?',
+            'options': ['Yes', 'No', 'Not', 'Never'],
+            'answer': 'No',
+          },
+          {
+            'question': 'Какая буква является согласной?',
+            'options': ['A', 'E', 'I', 'T'],
+            'answer': 'T',
+          },
+          {
+            'question': 'Как звучит буква "G"?',
+            'options': ['Джи', 'Ги', 'Дж', 'Г'],
+            'answer': 'Джи',
+          },
+          {
+            'question': 'Что означает фраза "Nice to meet you"?',
+            'options': ['Как дела?', 'Приятно познакомиться', 'До свидания', 'Спасибо'],
+            'answer': 'Приятно познакомиться',
+          },
+          {
+            'question': 'Как попросить прощения за небольшой проступок?',
+            'options': ['Excuse me', 'Sorry', 'Pardon', 'Forgive me'],
+            'answer': 'Sorry',
+          },
+          {
+            'question': 'Как спросить "Кто это?"',
+            'options': ['What is this?', 'Who is this?', 'Where is this?', 'How is this?'],
+            'answer': 'Who is this?',
+          },
+          {
+            'question': 'Как сказать "Пожалуйста" (в ответ на "Спасибо")?',
+            'options': ['Please', 'Thank you', 'You\'re welcome', 'Sorry'],
+            'answer': 'You\'re welcome',
+          },
     ],
     'Урок 2: Грамматика': [
 
@@ -299,6 +359,66 @@ LESSON_EXERCISES = {
             'options': ['am', 'is', 'are', 'be'],
             'answer': 'are',
           },
+           {
+            'question': 'Как правильно сказать "Они не врачи"?',
+            'options': ['They are not doctors', 'They not are doctors', 'They is not doctors', 'They aren\'t doctors'],
+            'answer': 'They are not doctors',
+          },
+          {
+            'question': 'Вставьте: "She ___ a teacher."',
+            'options': ['am', 'is', 'are', 'be'],
+            'answer': 'is',
+          },
+          {
+            'question': 'Какое слово является вопросительным?',
+            'options': ['But', 'And', 'What', 'So'],
+            'answer': 'What',
+          },
+          {
+            'question': 'Порядок слов в вопросе с глаголом "to be"?',
+            'options': ['S+V?', 'V+S?', 'S+O?', 'O+V?'],
+            'answer': 'V+S?',
+          },
+          {
+            'question': 'Как перевести "Это ручка"?',
+            'options': ['This is a pen', 'This pen is', 'Is this pen', 'Pen this is'],
+            'answer': 'This is a pen',
+          },
+          {
+            'question': 'Как сказать "Он не дома"?',
+            'options': ['He not is at home', 'He is not at home', 'He isn\'t at home', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Местоимение для неодушевлённого предмета (ед.ч.)?',
+            'options': ['He', 'She', 'It', 'They'],
+            'answer': 'It',
+          },
+          {
+            'question': 'Что означает "to be" в прошедшем времени?',
+            'options': ['am/is/are', 'was/were', 'have/has', 'do/does'],
+            'answer': 'was/were',
+          },
+          {
+            'question': 'Как спросить "Сколько это стоит?"',
+            'options': ['What is this?', 'How much is it?', 'How many is it?', 'Where is it?'],
+            'answer': 'How much is it?',
+          },
+          {
+            'question': 'Как сказать "Мне 20 лет"?',
+            'options': ['I have 20 years', 'I am 20 years old', 'I am 20', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как перевести "There is a cat"?',
+            'options': ['Это кот', 'Кот там', 'Там (есть) кот', 'Кот здесь'],
+            'answer': 'Там (есть) кот',
+          },
+          {
+            'question': 'Выберите правильный вариант: "___ book is on the table."',
+            'options': ['A', 'An', 'The', '--'],
+            'answer': 'The',
+          },
     ],
     'Урок 3: Словарь': [
 
@@ -421,6 +541,66 @@ LESSON_EXERCISES = {
             'question': 'Как сказать "ночь"?',
             'options': ['Night', 'Evening', 'Morning', 'Afternoon'],
             'answer': 'Night',
+          },
+           {
+            'question': 'Как будет "машина"?',
+            'options': ['Car', 'House', 'Tree', 'Sun'],
+            'answer': 'Car',
+          },
+          {
+            'question': 'Как будет "счастливый"?',
+            'options': ['Sad', 'Angry', 'Happy', 'Tired'],
+            'answer': 'Happy',
+          },
+          {
+            'question': 'Как сказать "школа"?',
+            'options': ['Hospital', 'School', 'Office', 'Bank'],
+            'answer': 'School',
+          },
+          {
+            'question': 'Как будет "учитель"?',
+            'options': ['Doctor', 'Engineer', 'Teacher', 'Student'],
+            'answer': 'Teacher',
+          },
+          {
+            'question': 'Как сказать "большой"?',
+            'options': ['Small', 'Big', 'Tall', 'Short'],
+            'answer': 'Big',
+          },
+          {
+            'question': 'Как будет "молоко"?',
+            'options': ['Water', 'Juice', 'Milk', 'Coffee'],
+            'answer': 'Milk',
+          },
+          {
+            'question': 'Как сказать "брат"?',
+            'options': ['Sister', 'Brother', 'Mother', 'Father'],
+            'answer': 'Brother',
+          },
+          {
+            'question': 'Как будет "птица"?',
+            'options': ['Cat', 'Dog', 'Bird', 'Fish'],
+            'answer': 'Bird',
+          },
+          {
+            'question': 'Как сказать "быстро"?',
+            'options': ['Slow', 'Fast', 'Quick', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как будет "работа"?',
+            'options': ['Job', 'Work', 'Career', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как сказать "друг"?',
+            'options': ['Enemy', 'Friend', 'Parent', 'Child'],
+            'answer': 'Friend',
+          },
+          {
+            'question': 'Как будет "деньги"?',
+            'options': ['Money', 'Cash', 'Currency', 'All of the above'],
+            'answer': 'All of the above',
           },
     ],
     'Урок 4: Разговорная практика': [
@@ -610,6 +790,66 @@ LESSON_EXERCISES = {
             ],
             'answer': 'Can you repeat it please?',
           },
+           {
+            'question': 'Как вежливо спросить "Можно войти?"',
+            'options': ['I go in?', 'Can I come in?', 'May I come in?', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как предложить помощь?',
+            'options': ['Help you?', 'Can I help you?', 'Let me help you?', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как ответить на "I\'m sorry"?',
+            'options': ['That\'s okay', 'Never mind', 'Don\'t worry', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как спросить "Ты говоришь по-английски?"',
+            'options': ['You speak English?', 'Do you speak English?', 'Are you speak English?', 'Both A and B'],
+            'answer': 'Do you speak English?',
+          },
+          {
+            'question': 'Как заказать кофе в кафе?',
+            'options': ['Give me coffee', 'I want coffee', 'I\'d like a coffee, please', 'Coffee me'],
+            'answer': 'I\'d like a coffee, please',
+          },
+          {
+            'question': 'Как сказать "Я не понял" (в разговоре)?',
+            'options': ['I don\'t understand', 'I didn\'t get it', 'I\'m lost', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как спросить "Вы свободны?" (говоря о времени)?',
+            'options': ['Are you free?', 'Do you have time?', 'Are you available?', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как выразить согласие в разговоре?',
+            'options': ['Yes', 'Absolutely', 'I agree', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как сказать "Я скучаю по тебе"?',
+            'options': ['I need you', 'I love you', 'I miss you', 'I want you'],
+            'answer': 'I miss you',
+          },
+          {
+            'question': 'Как спросить "Как погода?"',
+            'options': ['How is weather?', 'What is the weather like?', 'How is the weather?', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как вежливо прервать собеседника?',
+            'options': ['Stop!', 'Excuse me for interrupting', 'Sorry to interrupt', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Как сказать "Удачи!" (перед экзаменом/событием)?',
+            'options': ['Good bye', 'Good luck', 'Good day', 'Good night'],
+            'answer': 'Good luck',
+          },
     ],
     'Урок 5: Аудирование': [
 
@@ -767,6 +1007,66 @@ LESSON_EXERCISES = {
             'question': 'Как переводится "Rhythm"?',
             'options': ['Интонация', 'Ритм', 'Мелодия', 'Звук'],
             'answer': 'Ритм',
+          },
+           {
+            'question': 'Что означает "I beg your pardon"?',
+            'options': ['Я прошу прощения', 'Я прошу милостыню', 'Я прошу слова', 'Извините (переспросить)'],
+            'answer': 'Извините (переспросить)',
+          },
+          {
+            'question': 'Как переводится "Background noise"?',
+            'options': ['Тишина', 'Фоновый шум', 'Музыка', 'Разговор'],
+            'answer': 'Фоновый шум',
+          },
+          {
+            'question': 'Что означает "Can you speak slower?"',
+            'options': ['Говорите быстрее', 'Можете говорить медленнее?', 'Говорите громче', 'Повторите'],
+            'answer': 'Можете говорить медленнее?',
+          },
+          {
+            'question': 'Как переводится "Audio file"?',
+            'options': ['Видео файл', 'Текстовый файл', 'Аудио файл', 'Изображение'],
+            'answer': 'Аудио файл',
+          },
+          {
+            'question': 'Что означает "I didn\'t catch that"?',
+            'options': ['Я не поймал', 'Я не расслышал', 'Я не понял', 'Я не записал'],
+            'answer': 'Я не расслышал',
+          },
+          {
+            'question': 'Как переводится "Headphones"?',
+            'options': ['Колонки', 'Микрофон', 'Наушники', 'Динамик'],
+            'answer': 'Наушники',
+          },
+          {
+            'question': 'Что означает "The line is bad" (по телефону)?',
+            'options': ['Линия плохая', 'Провод плохой', 'Плохо слышно', 'Все варианты'],
+            'answer': 'Все варианты',
+          },
+          {
+            'question': 'Как переводится "Volume"?',
+            'options': ['Том книги', 'Громкость', 'Объем', 'Все варианты'],
+            'answer': 'Все варианты',
+          },
+          {
+            'question': 'Что означает "Play it again"?',
+            'options': ['Останови', 'Сыграй ещё раз', 'Включи погромче', 'Выключи'],
+            'answer': 'Сыграй ещё раз',
+          },
+          {
+            'question': 'Как переводится "Listening comprehension"?',
+            'options': ['Аудирование', 'Понимание на слух', 'Тест по аудированию', 'Все варианты'],
+            'answer': 'Все варианты',
+          },
+          {
+            'question': 'Что означает "Pause the recording"?',
+            'options': ['Остановить запись', 'Поставить на паузу', 'Перемотать', 'Удалить'],
+            'answer': 'Поставить на паузу',
+          },
+          {
+            'question': 'Как переводится "Transcript"?',
+            'options': ['Транскрипция', 'Текст аудиозаписи', 'Перевод', 'Диктант'],
+            'answer': 'Текст аудиозаписи',
           },
     ],
     'Урок 6: Письмо': [
@@ -971,6 +1271,66 @@ LESSON_EXERCISES = {
             ],
             'answer': 'Please reply soon',
           },
+           {
+            'question': 'Что означает "Re:" в теме письма?',
+            'options': ['Ответ', 'Относительно', 'Срочно', 'Секретно'],
+            'answer': 'Относительно',
+          },
+          {
+            'question': 'Как вежливо попросить прислать документ?',
+            'options': ['Send document', 'Could you please send the document?', 'I need document', 'Document now'],
+            'answer': 'Could you please send the document?',
+          },
+          {
+            'question': 'Что означает "I look forward to hearing from you"?',
+            'options': ['Я оглядываюсь', 'Я с нетерпением жду ответа', 'Я перезвоню', 'Не ждите ответа'],
+            'answer': 'Я с нетерпением жду ответа',
+          },
+          {
+            'question': 'Как подписать деловое письмо, если не знаешь имя получателя?',
+            'options': ['Yours sincerely', 'Yours faithfully', 'Best regards', 'With love'],
+            'answer': 'Yours faithfully',
+          },
+          {
+            'question': 'Что означает "Attachment"?',
+            'options': ['Письмо', 'Вложение', 'Конверт', 'Подпись'],
+            'answer': 'Вложение',
+          },
+          {
+            'question': 'Как извиниться за ошибку в письме?',
+            'options': ['Sorry for mistake', 'Please excuse the error', 'I apologize for the error', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Что означает "Please find attached"?',
+            'options': ['Найдите пожалуйста', 'Пожалуйста, найдите вложенным', 'Прикрепляю', 'Все варианты'],
+            'answer': 'Все варианты',
+          },
+          {
+            'question': 'Как начать письмо, если вы не знаете пол получателя?',
+            'options': ['Dear Sir', 'Dear Madam', 'Dear Sir or Madam', 'To whom it may concern'],
+            'answer': 'Dear Sir or Madam',
+          },
+          {
+            'question': 'Что означает "As per our conversation"?',
+            'options': ['Вне нашего разговора', 'Согласно нашему разговору', 'Перед разговором', 'После разговора'],
+            'answer': 'Согласно нашему разговору',
+          },
+          {
+            'question': 'Как написать "Копия" в деловом письме?',
+            'options': ['CC', 'BCC', 'Copy', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Что означает "Urgent" в теме письма?',
+            'options': ['Спам', 'Срочно', 'Важно', 'Прочти'],
+            'answer': 'Срочно',
+          },
+          {
+            'question': 'Как вежливо напомнить о себе в письме?',
+            'options': ['Reminder', 'Just a gentle reminder', 'I am writing to remind you', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
     ],
     'Урок 7: Чтение': [
 
@@ -1144,6 +1504,66 @@ LESSON_EXERCISES = {
             'options': ['Описание', 'Повествование', 'Диалог', 'Монолог'],
             'answer': 'Повествование',
           },
+          {
+            'question': 'Что означает "Table of contents"?',
+            'options': ['Стол', 'Содержание', 'Глава', 'Приложение'],
+            'answer': 'Содержание',
+          },
+          {
+            'question': 'Как переводится "Footnote"?',
+            'options': ['Сноска', 'Примечание внизу страницы', 'Заметка', 'Both A and B'],
+            'answer': 'Both A and B',
+          },
+          {
+            'question': 'Что означает "To browse a book"?',
+            'options': ['Внимательно читать', 'Листать/пролистывать книгу', 'Покупать книгу', 'Закрыть книгу'],
+            'answer': 'Листать/пролистывать книгу',
+          },
+          {
+            'question': 'Как переводится "Bibliography"?',
+            'options': ['Биография', 'Библиография', 'Список литературы', 'Both B and C'],
+            'answer': 'Both B and C',
+          },
+          {
+            'question': 'Что означает "Climax" (в сюжете)?',
+            'options': ['Начало', 'Кульминация', 'Развязка', 'Пролог'],
+            'answer': 'Кульминация',
+          },
+          {
+            'question': 'Как переводится "Genre"?',
+            'options': ['Герой', 'Жанр', 'Сюжет', 'Автор'],
+            'answer': 'Жанр',
+          },
+          {
+            'question': 'Что означает "To read between the lines"?',
+            'options': ['Читать по строчкам', 'Читать между строк (понимать подтекст)', 'Читать вслух', 'Пропускать строки'],
+            'answer': 'Читать между строк (понимать подтекст)',
+          },
+          {
+            'question': 'Как переводится "Plot twist"?',
+            'options': ['Крутой сюжет', 'Неожиданный поворот сюжета', 'Линейный сюжет', 'Скучный сюжет'],
+            'answer': 'Неожиданный поворот сюжета',
+          },
+          {
+            'question': 'Что означает "Draft"?',
+            'options': ['Черновик', 'Конечный вариант', 'Письмо', 'Глава'],
+            'answer': 'Черновик',
+          },
+          {
+            'question': 'Как переводится "Proofreading"?',
+            'options': ['Чтение', 'Корректура/вычитка', 'Написание', 'Печать'],
+            'answer': 'Корректура/вычитка',
+          },
+          {
+            'question': 'Что означает "Annotation"?',
+            'options': ['Аннотация', 'Краткое содержание', 'Примечание', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Как переводится "To skim"?',
+            'options': ['Читать внимательно', 'Бегло просматривать', 'Изучать', 'Анализировать'],
+            'answer': 'Бегло просматривать',
+          },
     ],
     'Урок 8: Культура и традиции': [
 
@@ -1302,6 +1722,66 @@ LESSON_EXERCISES = {
             'question': 'Что такое "Prom"?',
             'options': ['Промоция', 'Выпускной вечер', 'Прогулка', 'Парад'],
             'answer': 'Выпускной вечер',
+          },
+           {
+            'question': 'Что принято дарить на британскую свадьбу через 5 лет?',
+            'options': ['Бумага', 'Дерево', 'Серебро', 'Золото'],
+            'answer': 'Дерево',
+          },
+          {
+            'question': 'Как называется шотландская юбка?',
+            'options': ['Килт', 'Плед', 'Тартан', 'Шотландка'],
+            'answer': 'Килт',
+          },
+          {
+            'question': 'Что такое "Baby shower" в США?',
+            'options': ['Детский душ', 'Праздник в честь рождения ребенка', 'Крестины', 'День рождения'],
+            'answer': 'Праздник в честь рождения ребенка',
+          },
+          {
+            'question': 'Какой цветок символизирует Англию?',
+            'options': ['Трилистник', 'Роза', 'Чертополох', 'Нарцисс'],
+            'answer': 'Роза',
+          },
+          {
+            'question': 'Что символизирует Уэльс?',
+            'options': ['Роза', 'Лук-порей или нарцисс', 'Чертополох', 'Трилистник'],
+            'answer': 'Лук-порей или нарцисс',
+          },
+          {
+            'question': 'Как называется австралийский праздник, посвящённый лошадиным скачкам?',
+            'options': ['Melbourne Cup', 'Sydney Derby', 'Perth Race', 'Cairns Sprint'],
+            'answer': 'Melbourne Cup',
+          },
+          {
+            'question': 'Что принято есть на завтрак в Англии?',
+            'options': ['Круассан', 'Full English Breakfast', 'Овсянка', 'Тост с джемом'],
+            'answer': 'Full English Breakfast',
+          },
+          {
+            'question': 'Какой праздник известен фразой "Trick or treat"?',
+            'options': ['Рождество', 'Хэллоуин', 'День благодарения', 'Новый год'],
+            'answer': 'Хэллоуин',
+          },
+          {
+            'question': 'В какой стране День Святого Патрика является государственным праздником?',
+            'options': ['Великобритания', 'США', 'Ирландия', 'Канада'],
+            'answer': 'Ирландия',
+          },
+          {
+            'question': 'Что такое "Black Friday" в США?',
+            'options': ['Черная пятница (распродажи)', 'День траура', 'Экологический день', 'День черной кошки'],
+            'answer': 'Черная пятница (распродажи)',
+          },
+          {
+            'question': 'Как называется канадский праздник сбора урожая кленового сиропа?',
+            'options': ['Maple Festival', 'Sugar Bush Party', 'Syrup Day', 'All of the above'],
+            'answer': 'All of the above',
+          },
+          {
+            'question': 'Что такое "Mardi Gras"?',
+            'options': ['Жирный вторник (карнавал)', 'Великий пост', 'Пасха', 'Рождество'],
+            'answer': 'Жирный вторник (карнавал)',
           },
     ],
 }
